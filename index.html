@@ -1,30 +1,1044 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-<meta charset="utf-8">
-<title>Touristenattraktionen in Seoul</title>
-</head> 
-        <p>"Good Night Baby Changbin"-Bangchan</p>
-		<p>"Don't touch me"-Changbin</p>
-		<p>"Ohh woah"-Bangchan</p>
-		<p>"DoN't ToUcH mE"-Felix</p>
-		<p>"Yeah cause I'm so sensitiv cause I'm so hungry"-Changbin</p>
-		<p>"CaUsE i'M sO hUnGrY"-Felix</p>
-		<p>"Yeah I'm HUNGRY I'M HUNGRY"-Changbin</p>
-		<p>"YOU'RE ALWAYS HUNGRY"-Felix</p>
-		<p>"I'M HUNGRY"-Changbin</p><p>"Good Night Baby Changbin"-Bangchan</p>
-		<p>"Don't touch me"-Changbin</p>
-		<p>"Ohh woah"-Bangchan</p>
-		<p>"DoN't ToUcH mE"-Felix</p>
-		<p>"Yeah cause I'm so sensitiv cause I'm so hungry"-Changbin</p>
-		<p>"CaUsE i'M sO hUnGrY"-Felix</p>
-		<p>"Yeah I'm HUNGRY I'M HUNGRY"-Changbin</p>
-		<p>"YOU'RE ALWAYS HUNGRY"-Felix</p>
-		<p>"I'M HUNGRY"-Changbin</p>
-<!--_Foto "Touristenattracktionen in Seoul"_-->
-<!--_Einführung_-->
-<!--_Fotos_-->
-<!--_Texte_-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Der ultimative Reiseführer für Seoul, Südkorea. Entdecke Geschichte, Moderne und Kulinarik.">
+    <title>NEON SEOUL | The Ultimate Guide v3.0</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           1. GRUNDEINSTELLUNGEN & VARIABLEN
+           ========================================= */
+        :root {
+            /* Farbpalette - Cyberpunk Neon Theme */
+            --bg-dark: #050505;       /* Fast Schwarz */
+            --bg-panel: #101015;      /* Dunkles Grau für Karten */
+            --primary: #ffffff;       /* Weißer Text */
+            --secondary: #a0a0a0;     /* Grauer Text */
+            
+            /* Neon Farben */
+            --neon-cyan: #00f3ff;
+            --neon-pink: #bc13fe;
+            --neon-purple: #7a04eb;
+            --neon-green: #0aff0a;
+            
+            /* Abstände & Größen */
+            --container-width: 1200px;
+            --header-height: 80px;
+            --transition-speed: 0.3s;
+        }
+
+        /* Smooth Scrolling für die ganze Seite */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--primary);
+            overflow-x: hidden; /* Verhindert seitliches Scrollen */
+        }
+
+        /* Scrollbalken Design (nur Webkit Browser wie Chrome/Safari) */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-purple);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-pink);
+        }
+
+        /* =========================================
+           2. LOADING SCREEN (Ladebildschirm)
+           ========================================= */
+        #loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: var(--bg-dark);
+            z-index: 9999; /* Muss über allem liegen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader-circle {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255,255,255,0.1);
+            border-top: 5px solid var(--neon-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .loader-text {
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            animation: pulseText 1.5s infinite;
+        }
+
+        /* Klasse zum Ausblenden des Loaders */
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* =========================================
+           3. NAVIGATION BAR (Menü)
+           ========================================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            box-sizing: border-box;
+            z-index: 100;
+            transition: all 0.4s ease;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        /* Nav wird dunkel beim Scrollen */
+        nav.scrolled {
+            background: rgba(5, 5, 5, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            height: 60px; /* Wird etwas kleiner */
+        }
+
+        .nav-logo {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .nav-logo span {
+            color: var(--neon-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Unterstreichungs-Effekt beim Hover */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--neon-pink);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* =========================================
+           4. HERO SECTION (Titelbild)
+           ========================================= */
+        header {
+            height: 100vh; /* Volle Bildschirmhöhe */
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Das Hintergrundbild mit Overlay */
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1538485399081-7191377e8241?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            /* Ein dunkler Verlauf, damit der Text lesbar ist */
+            filter: brightness(0.6);
+            transform: scale(1.1); /* Für leichten Zoom-Effekt */
+            animation: subtleZoom 20s infinite alternate;
+        }
+
+        .hero-content {
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .hero-badge {
+            background-color: var(--neon-purple);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 0 0 15px var(--neon-purple);
+            animation: fadeInDown 1s ease;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            font-weight: 900;
+            line-height: 1.1;
+            text-transform: uppercase;
+            /* Glitch Text Effekt Simulation via Shadow */
+            text-shadow: 
+                3px 3px 0px rgba(188, 19, 254, 0.7), 
+                -3px -3px 0px rgba(0, 243, 255, 0.7);
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: var(--secondary);
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease 0.5s backwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+        }
+
+        /* =========================================
+           5. FILTER SECTION (Kategorien)
+           ========================================= */
+        .filter-section {
+            padding: 50px 20px;
+            text-align: center;
+            background-color: var(--bg-dark);
+            position: sticky;
+            top: 60px; /* Klebt unter der Nav-Bar */
+            z-index: 90;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--secondary);
+            padding: 10px 25px;
+            margin: 5px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Aktiver Button */
+        .filter-btn.active {
+            background-color: var(--neon-cyan);
+            color: #000;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* =========================================
+           6. GRID LAYOUT (Die Karten)
+           ========================================= */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 50px 20px;
+            min-height: 100vh; /* Damit die Seite nicht springt */
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--bg-panel);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
+            height: 450px; /* Feste Höhe */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Hover Effekt für die ganze Karte */
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-purple);
+            box-shadow: 0 10px 30px rgba(122, 4, 235, 0.2);
+        }
+
+        .card-img-wrapper {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.15);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            font-weight: bold;
+            border: 1px solid var(--neon-cyan);
+            z-index: 2;
+        }
+
+        .card-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            margin: 0 0 10px 0;
+            font-weight: 800;
+        }
+
+        .card-preview {
+            font-size: 0.95rem;
+            color: var(--secondary);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Zeigt nur 3 Zeilen Text */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px;
+        }
+
+        .read-more {
+            color: var(--neon-pink);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* =========================================
+           7. MODAL (Popup Fenster)
+           ========================================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: var(--bg-panel);
+            width: 1000px;
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 25px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 0 50px rgba(188, 19, 254, 0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+            transform: scale(0.8) translateY(50px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-image-side {
+            width: 50%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        /* Gradient über dem Modal-Bild */
+        .modal-image-side::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to top, var(--bg-panel), transparent);
+        }
+
+        .modal-info-side {
+            width: 50%;
+            padding: 50px;
+            overflow-y: auto; /* Scrollbar falls Text zu lang */
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--neon-pink);
+            transform: rotate(90deg);
+        }
+
+        .modal-category {
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            margin: 0 0 20px 0;
+            line-height: 1.1;
+        }
+
+        .modal-desc {
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .modal-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .meta-item h4 {
+            margin: 0 0 5px 0;
+            color: var(--neon-green);
+            font-size: 0.8rem;
+        }
+        .meta-item p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* =========================================
+           8. FOOTER (Fußzeile)
+           ========================================= */
+        footer {
+            background-color: #000;
+            padding: 80px 20px 30px 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-content {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+        }
+
+        .footer-col h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0;
+            width: 30px; height: 3px;
+            background: var(--neon-purple);
+        }
+
+        .footer-col p {
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.8rem;
+        }
+
+        /* =========================================
+           9. BACK TO TOP BUTTON
+           ========================================= */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--neon-purple);
+            color: white;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(122, 4, 235, 0.5);
+            z-index: 90;
+        }
+
+        #backToTop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #backToTop:hover {
+            transform: translateY(-5px);
+            background: var(--neon-pink);
+        }
+
+        /* =========================================
+           10. ANIMATIONEN (Keyframes)
+           ========================================= */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes pulseText { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes subtleZoom { from { transform: scale(1.1); } to { transform: scale(1.2); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);} 40% {transform: translateY(-10px) translateX(-50%);} 60% {transform: translateY(-5px) translateX(-50%);} }
+
+        /* =========================================
+           11. MEDIA QUERIES (Responsive Design)
+           ========================================= */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .modal-container { flex-direction: column; height: 100%; width: 100%; border-radius: 0; max-height: 100%; }
+            .modal-image-side { width: 100%; height: 300px; }
+            .modal-info-side { width: 100%; padding: 30px; }
+            nav { padding: 0 20px; }
+            .nav-links { display: none; /* Einfachheitshalber mobil ausblenden */ }
+            .filter-section { overflow-x: auto; white-space: nowrap; padding-bottom: 15px;}
+        }
+
+    </style>
+</head>
 <body>
-</body >
+
+    <div id="loader">
+        <div class="loader-circle"></div>
+        <div class="loader-text">SYSTEM LOADING...</div>
+    </div>
+
+    <nav id="navbar">
+        <a href="#" class="nav-logo">Seoul<span>.Guide</span></a>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#explore">Entdecken</a>
+            <a href="#about">Über Uns</a>
+            <a href="#contact">Kontakt</a>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Welcome to 2026</div>
+            <h1>Seoul<br>Cyber City</h1>
+            <p class="hero-subtitle">Erlebe eine Stadt, in der Jahrtausende alte Traditionen auf die Technologie von morgen treffen.</p>
+        </div>
+        <div class="scroll-indicator">
+            ⬇
+        </div>
+    </header>
+
+    <section class="filter-section" id="explore">
+        <button class="filter-btn active" data-filter="all">Alle</button>
+        <button class="filter-btn" data-filter="history">Geschichte</button>
+        <button class="filter-btn" data-filter="modern">Modern</button>
+        <button class="filter-btn" data-filter="food">Essen</button>
+        <button class="filter-btn" data-filter="nature">Natur</button>
+        <button class="filter-btn" data-filter="art">Kunst</button>
+    </section>
+
+    <div class="container">
+        <div class="grid" id="cardGrid">
+            </div>
+    </div>
+
+    <footer id="about">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Über das Projekt</h3>
+                <p>Diese Webseite wurde als Code-Review-Aufgabe für den Informatikunterricht erstellt. Sie demonstriert moderne Webtechnologien wie CSS Grid, Flexbox, Animations und JavaScript DOM Manipulation.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Wichtige Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Offizielle Tourismus Seite</a></li>
+                    <li><a href="#">Metro Plan Seoul</a></li>
+                    <li><a href="#">Visum Informationen</a></li>
+                    <li><a href="#">Notrufnummern</a></li>
+                </ul>
+            </div>
+            <div class="footer-col" id="contact">
+                <h3>Kontakt</h3>
+                <ul class="footer-links">
+                    <li>Schüler: Kayden</li>
+                    <li>Klasse: 8C</li>
+                    <li>Fach: Informatik</li>
+                    <li>Email: kayden.schunack@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 Seoul Guide Project | Version 3.0 Ultimate
+        </div>
+    </footer>
+
+    <button id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-container">
+            <div class="modal-close" onclick="closeModal()">✕</div>
+            <div class="modal-image-side" id="modalImg"></div>
+            <div class="modal-info-side">
+                <span class="modal-category" id="modalCat">Kategorie</span>
+                <h2 class="modal-title" id="modalTitle">Titel</h2>
+                <div class="modal-desc" id="modalDesc">Text</div>
+                
+                <div class="modal-meta">
+                    <div class="meta-item">
+                        <h4>Standort</h4>
+                        <p id="modalLoc">Seoul, Mitte</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Preis</h4>
+                        <p id="modalPrice">Kostenlos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================
+           DATENBANK (Array mit Objekten)
+           ========================================= */
+        const attractions = [
+            {
+                id: 1,
+                title: "Gyeongbokgung Palast",
+                category: "history",
+                image: "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=800",
+                desc: "Der größte und wichtigste der fünf Paläste. 1395 erbaut, dient er als Symbol der Joseon-Dynastie. Die Wachablösung ist weltberühmt. Wenn du traditionelle Kleidung (Hanbok) trägst, kommst du kostenlos rein!",
+                location: "Jongno-gu",
+                price: "3,000 KRW"
+            },
+            {
+                id: 2,
+                title: "N Seoul Tower",
+                category: "modern",
+                image: "https://images.unsplash.com/photo-1535189043414-47a3c49a0bed?w=800",
+                desc: "Der ikonische Fernsehturm auf dem Namsan Berg. Er ist 236 Meter hoch und bietet den besten 360-Grad-Blick über die Stadt. Besonders romantisch bei Sonnenuntergang.",
+                location: "Namsan Park",
+                price: "16,000 KRW"
+            },
+            {
+                id: 3,
+                title: "Myeongdong Market",
+                category: "food",
+                image: "https://images.unsplash.com/photo-1580651315530-69c8e0026377?w=800",
+                desc: "Ein Paradies für Foodies und Shopaholics. Hier gibt es das beste Street Food: Von Lobster-Schwänzen bis zu 30cm hohem Eis. Außerdem ist es das Zentrum für K-Beauty.",
+                location: "Jung-gu",
+                price: "Variabel"
+            },
+            {
+                id: 4,
+                title: "Bukchon Hanok Village",
+                category: "history",
+                image: "https://images.unsplash.com/photo-1583246830368-20412b509d6f?w=800",
+                desc: "Ein historisches Dorf mit hunderten traditionellen koreanischen Häusern (Hanok). Es liegt malerisch zwischen zwei Palästen und bietet tolle Fotospots.",
+                location: "Jongno-gu",
+                price: "Kostenlos"
+            },
+            {
+                id: 5,
+                title: "Lotte World Tower",
+                category: "modern",
+                image: "https://images.unsplash.com/photo-1596409893549-b39f1c30575d?w=800",
+                desc: "Mit 555 Metern das höchste Gebäude Koreas und das fünfthöchste der Welt. Die Aussichtsplattform 'Seoul Sky' hat einen Glasboden, auf dem man über dem Abgrund steht.",
+                location: "Songpa-gu",
+                price: "27,000 KRW"
+            },
+            {
+                id: 6,
+                title: "Dongdaemun Design Plaza",
+                category: "modern",
+                image: "https://images.unsplash.com/photo-1538485399081-7191377e8241?w=800",
+                desc: "Ein futuristisches Gebäude, entworfen von Zaha Hadid. Es sieht aus wie ein gelandetes Raumschiff. Nachts leuchtet es spektakulär und beherbergt Design-Ausstellungen.",
+                location: "Dongdaemun",
+                price: "Kostenlos"
+            },
+            {
+                id: 7,
+                title: "Insadong Street",
+                category: "art",
+                image: "https://images.unsplash.com/photo-1620633436577-3e817cf7b593?w=800",
+                desc: "Das kulturelle Herz der Stadt. Hier findest du Antiquitäten, Kunstgalerien, Pinsel, Papier und traditionelle Teehäuser in verwinkelten Gassen.",
+                location: "Insa-dong",
+                price: "Kostenlos"
+            },
+            {
+                id: 8,
+                title: "Hongdae",
+                category: "modern",
+                image: "https://images.unsplash.com/photo-1535313986064-1628290f64c1?w=800",
+                desc: "Das Viertel der Jugend und Musik. Bekannt für Straßenmusiker (Busking), günstige Mode, Karaoke-Bars und ein pulsierendes Nachtleben rund um die Universität.",
+                location: "Mapo-gu",
+                price: "Kostenlos"
+            },
+            {
+                id: 9,
+                title: "Cheonggyecheon Stream",
+                category: "nature",
+                image: "https://images.unsplash.com/photo-1563286390-e3256e29705f?w=800",
+                desc: "Eine Oase der Ruhe. Dieser 11km lange Fluss fließt mitten durch das Stadtzentrum, tiefergelegt unter dem Straßenniveau. Perfekt für Spaziergänge.",
+                location: "Jongno-gu",
+                price: "Kostenlos"
+            },
+            {
+                id: 10,
+                title: "Gangnam District",
+                category: "modern",
+                image: "https://images.unsplash.com/photo-1520466809213-7b9a56adcd45?w=800",
+                desc: "Der wohlhabendste Bezirk ('Beverly Hills von Seoul'). Bekannt für K-Pop, Luxusshopping, plastische Chirurgie und die riesige COEX Mall.",
+                location: "Gangnam-gu",
+                price: "Teuer"
+            },
+            {
+                id: 11,
+                title: "Changdeokgung & Huwon",
+                category: "history",
+                image: "https://images.unsplash.com/photo-1590422501099-b1d5c7df768d?w=800",
+                desc: "UNESCO Weltkulturerbe. Besonders berühmt für den 'Geheimen Garten' (Huwon), der wunderschön in die natürliche Landschaft integriert wurde.",
+                location: "Jongno-gu",
+                price: "8,000 KRW"
+            },
+            {
+                id: 12,
+                title: "War Memorial of Korea",
+                category: "history",
+                image: "https://images.unsplash.com/photo-1599290076937-56747d7c04bb?w=800",
+                desc: "Ein riesiges Museum zur Militärgeschichte Koreas. Draußen sind echte Flugzeuge, Panzer und Schiffe ausgestellt, die man besichtigen kann.",
+                location: "Yongsan-gu",
+                price: "Kostenlos"
+            },
+            {
+                id: 13,
+                title: "Gwangjang Market",
+                category: "food",
+                image: "https://images.unsplash.com/photo-1629095745425-706388960090?w=800",
+                desc: "Einer der ältesten Märkte Koreas. Berühmt für Bindaetteok (Mungbohnenpfannkuchen) und rohes Rindfleisch (Yukhoe). Sehr authentisch!",
+                location: "Jongno-gu",
+                price: "Günstig"
+            },
+            {
+                id: 14,
+                title: "Ihwa Mural Village",
+                category: "art",
+                image: "https://images.unsplash.com/photo-1584803738090-4c3d3175024b?w=800",
+                desc: "Ein Dorf am Hang, das durch Kunst gerettet wurde. Überall an den Wänden und Treppen finden sich bunte Malereien und Skulpturen.",
+                location: "Ihwa-dong",
+                price: "Kostenlos"
+            },
+            {
+                id: 15,
+                title: "Bukhansan National Park",
+                category: "nature",
+                image: "https://images.unsplash.com/photo-1614611623607-92007503086c?w=800",
+                desc: "Wandern in der Großstadt? Ja! Dieser Nationalpark liegt direkt am Stadtrand und bietet steile Granitgipfel mit Wahnsinns-Aussicht.",
+                location: "Dobong-gu",
+                price: "Kostenlos"
+            },
+            {
+                id: 16,
+                title: "Starfield Library",
+                category: "art",
+                image: "https://images.unsplash.com/photo-1580186124159-3614953c973d?w=800",
+                desc: "Eine öffentliche Bibliothek mitten in einem Einkaufszentrum. Die 13 Meter hohen Bücherregale sind ein extrem beliebter Instagram-Spot.",
+                location: "COEX Mall",
+                price: "Kostenlos"
+            }
+        ];
+
+        /* =========================================
+           LOGIK & FUNKTIONEN
+           ========================================= */
+
+        const grid = document.getElementById('cardGrid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // 1. Initialisierung beim Laden
+        window.addEventListener('load', () => {
+            // Loader ausblenden
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.classList.add('loader-hidden');
+            }, 800); // Kurze Wartezeit für Effekt
+
+            // Alle Karten anzeigen
+            renderCards('all');
+        });
+
+        // 2. Karten Rendern (Erstellen)
+        function renderCards(filter) {
+            grid.innerHTML = ''; // Grid leeren
+            
+            // Filtern
+            const filteredData = filter === 'all' 
+                ? attractions 
+                : attractions.filter(item => item.category === filter);
+
+            // HTML bauen
+            filteredData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                // Animation Verzögerung für coolen "Nacheinander"-Effekt
+                card.style.animation = `fadeInUp 0.6s ease forwards ${index * 0.1}s`;
+                card.style.opacity = '0'; // Startet unsichtbar
+
+                card.innerHTML = `
+                    <div class="card-img-wrapper">
+                        <div class="card-overlay">${item.category.toUpperCase()}</div>
+                        <img src="${item.image}" alt="${item.title}" class="card-img" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <h3 class="card-title">${item.title}</h3>
+                            <p class="card-preview">${item.desc}</p>
+                        </div>
+                        <div class="card-footer">
+                            <span>📍 ${item.location}</span>
+                            <span class="read-more">Mehr Infos →</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Klick Event für Modal
+                card.onclick = () => openModal(item);
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // 3. Filter Buttons Event Listener
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Active Klasse verschieben
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                btn.classList.add('active');
+                
+                // Filtern
+                renderCards(btn.dataset.filter);
+            });
+        });
+
+        // 4. Modal (Popup) Logik
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modalImg');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalCat = document.getElementById('modalCat');
+        const modalLoc = document.getElementById('modalLoc');
+        const modalPrice = document.getElementById('modalPrice');
+
+        function openModal(item) {
+            modalImg.style.backgroundImage = `url(${item.image})`;
+            modalTitle.innerText = item.title;
+            modalDesc.innerText = item.desc;
+            modalCat.innerText = item.category;
+            modalLoc.innerText = item.location;
+            modalPrice.innerText = item.price;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Scrollen im Hintergrund verhindern
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Scrollen wieder erlauben
+        }
+
+        // Modal schließen wenn man daneben klickt
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // 5. Scroll Events (Navbar & BackToTop)
+        const navbar = document.getElementById('navbar');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
 </html>
