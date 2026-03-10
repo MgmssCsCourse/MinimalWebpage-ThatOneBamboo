@@ -1,1 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Touristenattraktionen Seoul</title>
+</head>
 
+<body bgcolor="lightblue">
+
+<h1>Touristenattraktionen Seoul</h1>
+
+<p>Hallo ich lerne gerade HTML und das ist meine erste Webseite :)</p>
+
+<h3>Top Sehenswürdigkeiten:</h3>
+
+<ul>
+<li>Changdeokgung</li>
+<li>Gyeongbokgung Place</li>
+<li>N Seoul Tower</li>
+<li>Bukchon Hanok Village</li>
+</ul>
+
+<p>Klick hier für Google:</p>
+<a href="https://www.google.com">Hier klicken!!!</a>
+
+</body>
+</html>
